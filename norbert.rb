@@ -9,7 +9,7 @@ dev = ctx.open nil
 $mpd = MPD.new
 $mpd.connect
 
-file = File.read('/root/norbert-database.json')
+file = File.read("#{ENV['NORBERT_ROOT']}/norbert-database.json")
 database = JSON.parse(file)
 
 statusLED = 12
