@@ -3,8 +3,6 @@ require 'ruby-mpd'
 require 'json'
 require 'rpi_gpio'
 
-require 'pry'
-
 ctx = NFC::Context.new
 dev = ctx.open nil
 
