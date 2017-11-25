@@ -3,6 +3,8 @@ require 'ruby-mpd'
 require 'json'
 require 'rpi_gpio'
 
+puts "Firing up!"
+
 ctx = NFC::Context.new
 dev = ctx.open nil
 
@@ -21,13 +23,12 @@ volumeDownButton = 19
 
 RPi::GPIO.set_numbering :bcm
 
-RPi::GPIO.setup statusLED, :as => :output
-RPi::GPIO.set_high statusLED
-
 controlButtons = [stopButton, nextButton, previousButton, volumeUpButton, volumeDownButton]
 
 RPi::GPIO.setup statusLED, :as => :output
 RPi::GPIO.set_high statusLED
+
+puts "Set LED status available"
 
 controlButtons.each do |controlButton|
   RPi::GPIO.setup controlButton, :as => :input, :pull => :up
@@ -70,6 +71,7 @@ $mpd.clear
 
 loop do
   card_uuid = dev.poll.to_s
+  puts "Read card #{card_uuid}"
   if card_uuid != '-90'
     database.each do |entry|
       if entry['card_uuid'] == card_uuid && card_uuid != $currently_playing_uuid
